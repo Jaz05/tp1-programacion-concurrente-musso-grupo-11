@@ -36,8 +36,8 @@ pub fn estacion_mantenimiento() {
                     return;
                 }
                 println!("Mecanico: no hay robots para arreglar, me duermo...");
-                state = hay_robot.wait(state).unwrap();
                 //Se despierta cuando hacen el notify a hay_robot
+                state = hay_robot.wait(state).unwrap();
             }
 
             //El mecánico toma uno de los robots de la bahía
