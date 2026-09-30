@@ -48,6 +48,7 @@ pub fn estacion_mantenimiento() {
 }
 
 pub fn simular_mantenimiento(config: ConfigMantenimiento) -> ResultadoMantenimiento {
+	//Para tests
     if config.bahias == 0{
         return ResultadoMantenimiento{reparados: vec![], rechazos: 0, max_ocupacion: 0};
     }

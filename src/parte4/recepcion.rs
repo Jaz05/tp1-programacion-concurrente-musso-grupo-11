@@ -43,6 +43,7 @@ pub fn zona_recepcion() {
 }
 
 pub fn simular_recepcion(config: ConfigRecepcion) -> ResultadoRecepcion {
+	//Para tests
     if config.capacidad == 0 || config.camiones == 0 || config.robots == 0{
         return ResultadoRecepcion{ tomados: vec![], max_ocupacion: 0 };
     }
