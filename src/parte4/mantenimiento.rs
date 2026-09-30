@@ -48,6 +48,9 @@ pub fn estacion_mantenimiento() {
 }
 
 pub fn simular_mantenimiento(config: ConfigMantenimiento) -> ResultadoMantenimiento {
+    if config.bahias == 0{
+        return ResultadoMantenimiento{reparados: vec![], rechazos: 0, max_ocupacion: 0};
+    }
     //Sin bahías los robots serían rechazados para siempre
     assert!(config.bahias > 0);
 
@@ -144,7 +147,7 @@ pub fn simular_mantenimiento(config: ConfigMantenimiento) -> ResultadoMantenimie
                 println!("Robot {}: espero en la bahía. (ocupadas: {}/{})",
                         id, state.esperando.len(), bahias);
 
-                //Notifica al meçánico para que se despierte
+                //Notifica al mecánico para que se despierte
                 hay_robot.notify_one();
                 drop(state);
                 break;

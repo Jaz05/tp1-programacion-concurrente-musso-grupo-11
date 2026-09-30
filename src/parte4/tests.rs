@@ -221,6 +221,56 @@ fn recepcion_estres_gran_escala() {
     }
 }
 
+#[test]
+fn recepcion_sin_camiones() {
+    let config =
+        ConfigRecepcion {
+            capacidad: 10,
+            total_paquetes: 10,
+            camiones: 0,
+            robots: 3,
+            demora_camion_ms: 0..0,
+            demora_robot_ms: 0..0,
+        };
+    let limite = Duration::from_secs(5);
+    let resultado = ejecutar_con_limite(limite, move || simular_recepcion(config));
+    assert!(resultado.tomados.is_empty());
+    assert_eq!(resultado.max_ocupacion, 0);
+}
+
+#[test]
+fn recepcion_sin_capacidad() {
+    let config =
+        ConfigRecepcion {
+            capacidad: 0,
+            total_paquetes: 10,
+            camiones: 10,
+            robots: 3,
+            demora_camion_ms: 0..0,
+            demora_robot_ms: 0..0,
+        };
+    let limite = Duration::from_secs(5);
+    let resultado = ejecutar_con_limite(limite, move || simular_recepcion(config));
+    assert!(resultado.tomados.is_empty());
+    assert_eq!(resultado.max_ocupacion, 0);
+}
+
+#[test]
+fn recepcion_sin_robots() {
+    let config =
+        ConfigRecepcion {
+            capacidad: 10,
+            total_paquetes: 10,
+            camiones: 10,
+            robots: 0,
+            demora_camion_ms: 0..0,
+            demora_robot_ms: 0..0,
+        };
+    let limite = Duration::from_secs(5);
+    let resultado = ejecutar_con_limite(limite, move || simular_recepcion(config));
+    assert!(resultado.tomados.is_empty());
+    assert_eq!(resultado.max_ocupacion, 0);
+}
 // ---------------------------------------------------------------------------
 // Estación de Mantenimiento
 // ---------------------------------------------------------------------------
@@ -326,4 +376,19 @@ fn mantenimiento_sin_robots() {
         Duration::from_secs(5),
     );
     assert!(resultado.reparados.is_empty());
+}
+
+#[test]
+fn mantenimiento_sin_bahias() {
+    let config = ConfigMantenimiento {
+            bahias: 0,
+            total_robots: 3,
+            llegada_ms: 0..0,
+            reparacion_ms: 0..0,
+        };
+        let limite = Duration::from_secs(5);
+    let resultado = ejecutar_con_limite(limite, move || simular_mantenimiento(config));
+    assert!(resultado.reparados.is_empty());
+    assert_eq!(resultado.max_ocupacion, 0);
+    assert_eq!(resultado.rechazos, 0);
 }
